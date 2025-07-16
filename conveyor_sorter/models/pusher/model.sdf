@@ -44,23 +44,23 @@
             <size> 1.6 2 1 </size>
           </box>
         </geometry>
-      <surface>
+      <!-- <surface>
           <friction>
             <ode>
               <mu>5.0</mu>
               <mu2>5.0</mu2>
             </ode>
           </friction>
-        </surface>
+        </surface> -->
       </collision>
-      <inertial>
+      <!-- <inertial>
         <mass>1.0</mass>
         <inertia>
           <ixx>0.1</ixx>
           <iyy>0.1</iyy>
           <izz>0.1</izz>
         </inertia>
-      </inertial>
+      </inertial> -->
     </link>
 
     <joint name="rod_joint" type="prismatic">
@@ -75,12 +75,7 @@
       filename="gz-sim-joint-position-controller-system"
       name="gz::sim::systems::JointPositionController">
       <joint_name>rod_joint</joint_name>
-      <topic>topic_name</topic>
-      <p_gain>50</p_gain>
-      <i_gain>0.1</i_gain>
-      <d_gain>5.0</d_gain>
-      <cmd_max>5000</cmd_max>
-      <cmd_min>-5000</cmd_min>
+      <topic>rod_vel</topic>
     </plugin>
 
     <plugin
