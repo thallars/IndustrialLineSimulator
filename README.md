@@ -19,3 +19,5 @@ To send a command to the pusher and belt:
 gz topic -t "/rod_vel" -m gz.msgs.Double -p "data: 10.0"
 gz topic -t "/belt_vel" -m gz.msgs.Double -p "data: 0.0"
 ```
+Topic with R8G8B8 images:
+`/camera/image_raw`
