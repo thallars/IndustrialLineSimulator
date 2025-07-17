@@ -24,7 +24,68 @@
       </visual>
     </link>
 
-    <!-- Rod -->
+    <!-- Camera Holder -->
+    <link name="holder_link">
+      <pose relative_to="base"> 0 1.5 2.5 0 0 0</pose>
+      <visual name="holder_link_visual">
+        <geometry>
+          <box>
+            <size> 1 1.5 0.25 </size>
+          </box>
+        </geometry>
+        <material>
+          <ambient> 0.2 0.2 0.2 1 </ambient>
+          <diffuse> 0.2 0.2 0.2 1 </diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="holder_joint" type="fixed">
+      <parent>base</parent>
+      <child>holder_link</child>
+    </joint>
+
+    <!-- Camera Link -->
+    <link name="camera_link">
+      <pose relative_to="holder_link"> 0 0.625 -0.175 0 1.5708 0</pose>
+      <visual name="camera_link_visual">
+        <geometry>
+          <box>
+            <size> 0.1 0.25 0.5 </size>
+          </box>
+        </geometry>
+        <material>
+          <ambient> 0 0 0 1 </ambient>
+          <diffuse> 0 0 0 1 </diffuse>
+        </material>
+      </visual>
+      <sensor name="camera_sensor" type="camera">
+        <always_on>false</always_on>
+        <visualize>true</visualize>
+        <update_rate>30</update_rate>
+        <topic>camera/image_raw</topic>
+        <camera name="camera">
+          <camera_info_topic>camera/camera_info</camera_info_topic>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <horizontal_fov>1.047</horizontal_fov>
+          <clip>
+            <near>0.1</near>
+            <far>10</far>
+          </clip>
+        </camera>
+      </sensor>
+    </link>
+
+    <joint name="camera_joint" type="fixed">
+      <parent>holder_link</parent>
+      <child>camera_link</child>
+    </joint>
+
+    <!-- Rod to push the cubes -->
     <link name="rod">
       <pose relative_to="base"> 0 0.25 -1.4 0 0 0 </pose>
       <visual name="rod_visual">
@@ -44,23 +105,7 @@
             <size> 1.6 2 1 </size>
           </box>
         </geometry>
-      <!-- <surface>
-          <friction>
-            <ode>
-              <mu>5.0</mu>
-              <mu2>5.0</mu2>
-            </ode>
-          </friction>
-        </surface> -->
       </collision>
-      <!-- <inertial>
-        <mass>1.0</mass>
-        <inertia>
-          <ixx>0.1</ixx>
-          <iyy>0.1</iyy>
-          <izz>0.1</izz>
-        </inertia>
-      </inertial> -->
     </link>
 
     <joint name="rod_joint" type="prismatic">
@@ -83,6 +128,12 @@
       name="gz::sim::systems::JointStatePublisher">
       <joint_name>rod_joint</joint_name>
     </plugin>
+
+    	<plugin
+        filename="gz-sim-sensors-system"
+        name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+      </plugin>   
 
   </model>
 </sdf>

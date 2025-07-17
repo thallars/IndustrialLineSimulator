@@ -4,6 +4,7 @@ from launch.actions import SetEnvironmentVariable, IncludeLaunchDescription
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from ros_gz_bridge.actions import RosGzBridge
 
 def generate_launch_description():
     package_name = 'conveyor_sorter'
@@ -15,12 +16,17 @@ def generate_launch_description():
     pkg_path = get_package_share_directory(package_name)
     models_path = PathJoinSubstitution([pkg_path, 'models'])
 
+    gz_bridge_config = PathJoinSubstitution([pkg_path, 'config', 'gz_bridge.yaml'])
     world_path = PathJoinSubstitution([pkg_path, 'worlds', 'conveyor_world.sdf'])
     conveyor_sdf = PathJoinSubstitution([models_path, 'conveyor', 'model.sdf'])
     pusher_sdf = PathJoinSubstitution([models_path, 'pusher', 'model.sdf'])
 
     return LaunchDescription([
         SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', models_path),
+        RosGzBridge(
+            bridge_name='gz_bridge',
+            config_file=gz_bridge_config
+        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_launch_path),
             launch_arguments={
