@@ -7,7 +7,7 @@
 Run:
 ```
 source /opt/ros/jazzy/setup.bash
-gz sim conveyor_sorter/worlds/conveyor_world.world
+gz sim conveyor_sorter/worlds/conveyor_world.sdf
 ```
 In another terminal:
 ```
