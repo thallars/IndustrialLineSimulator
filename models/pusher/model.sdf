@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <sdf version="1.9">
   <model name="pusher">
 
@@ -10,32 +11,32 @@
 
     <!-- Pusher base -->
     <link name="base">
-      <pose> 0 -2.5 3 0 0 0 </pose>
+      <pose>0 -2.5 3 0 0 0</pose>
       <visual name="base_visual">
         <geometry>
           <box>
-            <size> 2 2 6 </size>
+            <size>2 2 6</size>
           </box>
         </geometry>
         <material>
-          <ambient> 0.2 0.2 0.2 1 </ambient>
-          <diffuse> 0.2 0.2 0.2 1 </diffuse>
+          <ambient>0.2 0.2 0.2 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
         </material>
       </visual>
     </link>
 
     <!-- Camera Holder -->
     <link name="holder_link">
-      <pose relative_to="base"> 0 1.5 2.5 0 0 0</pose>
+      <pose relative_to="base">0 1.5 2.5 0 0 0</pose>
       <visual name="holder_link_visual">
         <geometry>
           <box>
-            <size> 1 1.5 0.25 </size>
+            <size>1 1.5 0.25</size>
           </box>
         </geometry>
         <material>
-          <ambient> 0.2 0.2 0.2 1 </ambient>
-          <diffuse> 0.2 0.2 0.2 1 </diffuse>
+          <ambient>0.2 0.2 0.2 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
         </material>
       </visual>
     </link>
@@ -47,23 +48,23 @@
 
     <!-- Camera Link -->
     <link name="camera_link">
-      <pose relative_to="holder_link"> 0 0.625 -0.175 0 1.5708 0</pose>
+      <pose relative_to="holder_link">0 0.625 -0.175 0 1.5708 0</pose>
       <visual name="camera_link_visual">
         <geometry>
           <box>
-            <size> 0.1 0.25 0.5 </size>
+            <size>0.1 0.25 0.5</size>
           </box>
         </geometry>
         <material>
-          <ambient> 0 0 0 1 </ambient>
-          <diffuse> 0 0 0 1 </diffuse>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>0 0 0 1</diffuse>
         </material>
       </visual>
       <sensor name="camera_sensor" type="camera">
         <always_on>false</always_on>
         <visualize>true</visualize>
         <update_rate>30</update_rate>
-        <topic>camera/image_raw</topic>
+        <topic>pusher/camera_raw</topic>
         <camera name="camera">
           <camera_info_topic>camera/camera_info</camera_info_topic>
           <image>
@@ -87,22 +88,22 @@
 
     <!-- Rod to push the cubes -->
     <link name="rod">
-      <pose relative_to="base"> 0 0.25 -1.4 0 0 0 </pose>
+      <pose relative_to="base">0 0.25 -1.4 0 0 0</pose>
       <visual name="rod_visual">
         <geometry>
           <box>
-            <size> 1.6 2 1 </size>
+            <size>1.6 2 1</size>
           </box>
         </geometry>
         <material>
-          <ambient> 0.2 0.2 0.2 1 </ambient>
-          <diffuse> 0.2 0.2 0.2 1 </diffuse>
+          <ambient>0.2 0.2 0.2 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
         </material>
       </visual>
       <collision name="rod_collision">
         <geometry>
           <box>
-            <size> 1.6 2 1 </size>
+            <size>1.6 2 1</size>
           </box>
         </geometry>
       </collision>
@@ -113,27 +114,30 @@
       <child>rod</child>
       <axis>
         <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3</upper>
+        </limit>
       </axis>
     </joint>
 
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>rod_joint</joint_name>
-      <topic>rod_vel</topic>
+      <topic>pusher/position</topic>
+      <p_gain>2000</p_gain>
+      <i_gain>20</i_gain>
+      <d_gain>100</d_gain>
+      <cmd_max>10000</cmd_max>
+      <cmd_mix>-10000</cmd_mix>
     </plugin>
 
-    <plugin
-      filename="gz-sim-joint-state-publisher-system"
-      name="gz::sim::systems::JointStatePublisher">
+    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
       <joint_name>rod_joint</joint_name>
+      <topic>pusher/state</topic>
     </plugin>
 
-    	<plugin
-        filename="gz-sim-sensors-system"
-        name="gz::sim::systems::Sensors">
-        <render_engine>ogre2</render_engine>
-      </plugin>   
-
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
   </model>
 </sdf>

@@ -46,4 +46,12 @@ def generate_launch_description():
                 'file': pusher_sdf,
             }.items(),
         ),
+        Node(
+            package=package_name,
+            executable='pusher_controller'
+        ),
+        Node(
+            package=package_name,
+            executable='conveyor_controller'
+        ),
     ])
