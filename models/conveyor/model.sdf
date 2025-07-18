@@ -75,12 +75,12 @@
 
     <plugin filename="gz-sim-joint-controller-system" name="gz::sim::systems::JointController">
       <joint_name>belt_joint</joint_name>
-      <initial_velocity>1.0</initial_velocity>
-      <topic>belt_vel</topic>
+      <initial_velocity>0.0</initial_velocity>
+      <topic>conveyor/velocity</topic>
     </plugin>
 
     <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
-      <joint_name>belt_joint</joint_name>
+      <joint_name>conveyor/state</joint_name>
     </plugin>
 
   </model>

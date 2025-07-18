@@ -25,8 +25,15 @@ target_link_libraries(
   PUBLIC ${dependencies}
 )
 
+add_executable(conveyor_controller src/conveyor_controller.cpp)
+target_link_libraries(
+  conveyor_controller
+  PUBLIC ${dependencies}
+)
+
 install(TARGETS
   pusher_controller
+  conveyor_controller
   DESTINATION lib/${PROJECT_NAME}
 )
 
