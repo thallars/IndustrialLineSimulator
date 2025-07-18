@@ -1,8 +1,9 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <sdf version="1.6">
   <world name="default">
 
-    <light type="directional" name="sun">
+    <light name="sun" type="directional">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
@@ -21,7 +22,11 @@
       <pose>0 0 0 0 0 0</pose>
       <link name="link">
         <collision name="collision">
-          <geometry><plane><normal>0 0 1</normal></plane></geometry>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+            </plane>
+          </geometry>
         </collision>
         <visual name="visual">
           <geometry>
@@ -32,7 +37,7 @@
           </geometry>
           <material>
             <ambient>1 1 1 0</ambient>
-            <diffuse> 1 1 1 0</diffuse>
+            <diffuse>1 1 1 0</diffuse>
           </material>
         </visual>
       </link>
