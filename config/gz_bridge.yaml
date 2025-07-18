@@ -1,19 +1,16 @@
-- gz_topic_name: rod_vel
-  ros_topic_name: rod_vel
+- topic_name: rod_vel
   gz_type_name: gz.msgs.Double
   ros_type_name: std_msgs/msg/Float64
   lazy: true
   direction: BIDIRECTIONAL
 
-- gz_topic_name: rod_joint
-  ros_topic_name: rod_joint
+- topic_name: rod_joint
   gz_type_name: gz.msgs.Model
   ros_type_name: sensor_msgs/msg/JointState
   lazy: true
   direction: BIDIRECTIONAL
 
-- gz_topic_name: camera/image_raw
-  ros_topic_name: camera/image_raw
+- topic_name: camera/image_raw
   gz_type_name: gz.msgs.Image
   ros_type_name: sensor_msgs/msg/Image
   lazy: true
