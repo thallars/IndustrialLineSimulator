@@ -7,9 +7,28 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
+set(dependencies
+  ${rclcpp_TARGETS}
+  ${std_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  ${sensor_msgs_TARGETS}
+)
+
+add_executable(pusher_controller src/pusher_controller.cpp)
+target_link_libraries(
+  pusher_controller
+  PUBLIC ${dependencies}
+)
+
+install(TARGETS
+  pusher_controller
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(DIRECTORY
   config

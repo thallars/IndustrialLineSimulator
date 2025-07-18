@@ -113,6 +113,10 @@
       <child>rod</child>
       <axis>
         <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3</upper>
+        </limit>
       </axis>
     </joint>
 
@@ -120,7 +124,12 @@
       filename="gz-sim-joint-position-controller-system"
       name="gz::sim::systems::JointPositionController">
       <joint_name>rod_joint</joint_name>
-      <topic>pusher/velocity</topic>
+      <topic>pusher/position</topic>
+      <p_gain>2000</p_gain>
+      <i_gain>20</i_gain>
+      <d_gain>100</d_gain>
+      <cmd_max>10000</cmd_max>
+      <cmd_mix>-10000</cmd_mix>
     </plugin>
 
     <plugin
