@@ -1,5 +1,5 @@
-# to go backward pass False
-bool forward
+# to go backward pass false
+bool forward true
 ---
 bool success
 string message
