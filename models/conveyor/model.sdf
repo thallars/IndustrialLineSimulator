@@ -80,7 +80,8 @@
     </plugin>
 
     <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
-      <joint_name>conveyor/state</joint_name>
+      <joint_name>belt_joint</joint_name>
+      <topic>conveyor/state</topic>
     </plugin>
 
   </model>
