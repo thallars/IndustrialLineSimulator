@@ -54,4 +54,8 @@ def generate_launch_description():
             package=package_name,
             executable='conveyor_controller'
         ),
+        Node(
+            package=package_name,
+            executable='pusher_vision'
+        ),
     ])

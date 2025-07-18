@@ -12,6 +12,8 @@ find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/ConveyorStart.srv"
@@ -50,6 +52,12 @@ install(DIRECTORY
   models
   worlds
   DESTINATION share/${PROJECT_NAME}
+)
+
+add_executable(pusher_vision src/pusher_vision.cpp)
+ament_target_dependencies(pusher_vision rclcpp sensor_msgs cv_bridge OpenCV std_srvs)
+install(TARGETS pusher_vision
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
