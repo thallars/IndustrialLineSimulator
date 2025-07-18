@@ -44,6 +44,7 @@ class PusherController : public rclcpp::Node {
       start_pos.data = 0.;
       pusher_pos_pub->publish(start_pos);
       response->success = true;
+      response->message = "арбуз revenge";
     }
 
     void pusher_state_cb(
