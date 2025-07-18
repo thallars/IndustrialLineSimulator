@@ -7,12 +7,14 @@
 #include <std_srvs/srv/trigger.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
 
+#include <conveyor_sorter/srv/conveyor_start.hpp>
+
 using namespace std::placeholders;
 
 class ConveyorController : public rclcpp::Node {
   public:
     ConveyorController() : Node("conveyor_controller") {
-      start_srv = this->create_service<std_srvs::srv::Trigger>(
+      start_srv = this->create_service<conveyor_sorter::srv::ConveyorStart>(
         "conveyor/start",
         std::bind(&ConveyorController::start_cb, this, _1, _2)
       );
@@ -32,17 +34,17 @@ class ConveyorController : public rclcpp::Node {
     }
 
   private:
-    rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr start_srv;
+    rclcpp::Service<conveyor_sorter::srv::ConveyorStart>::SharedPtr start_srv;
     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr stop_srv;
     rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr conveyor_state_sub;
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr conveyor_vel_pub;
 
     void start_cb(
-      const std_srvs::srv::Trigger::Request::SharedPtr request,
-      std_srvs::srv::Trigger::Response::SharedPtr response
+      const conveyor_sorter::srv::ConveyorStart::Request::SharedPtr request,
+      conveyor_sorter::srv::ConveyorStart::Response::SharedPtr response
     ) {
       std_msgs::msg::Float64 start_vel;
-      start_vel.data = 1.;
+      start_vel.data = (request->forward ? 1. : -1.) * 1.;
       conveyor_vel_pub->publish(start_vel);
       response->success = true;
       response->message = "conveyor started";
