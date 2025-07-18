@@ -67,8 +67,11 @@
         <topic>pusher/camera_raw</topic>
         <camera name="camera">
           <camera_info_topic>camera/camera_info</camera_info_topic>
+          <horizontal_fov>1.037</horizontal_fov>
           <image>
-            <format>B8G8R8</format>
+            <width>320</width>
+            <height>240</height>
+            <format>R8G8B8</format>
           </image>
           <clip>
             <near>0.1</near>

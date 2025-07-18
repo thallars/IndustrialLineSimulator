@@ -55,7 +55,7 @@ install(DIRECTORY
 )
 
 add_executable(pusher_vision src/pusher_vision.cpp)
-ament_target_dependencies(pusher_vision rclcpp sensor_msgs cv_bridge OpenCV)
+ament_target_dependencies(pusher_vision rclcpp sensor_msgs cv_bridge OpenCV std_srvs)
 install(TARGETS pusher_vision
   DESTINATION lib/${PROJECT_NAME}
 )
