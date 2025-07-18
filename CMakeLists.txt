@@ -8,9 +8,43 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/ConveyorStart.srv"
+)
+ament_export_dependencies(rosidl_default_runtime)
+
+set(dependencies
+  ${rclcpp_TARGETS}
+  ${std_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  ${sensor_msgs_TARGETS}
+)
+
+add_executable(pusher_controller src/pusher_controller.cpp)
+target_link_libraries(
+  pusher_controller
+  PUBLIC ${dependencies}
+)
+
+add_executable(conveyor_controller src/conveyor_controller.cpp)
+target_link_libraries(
+  conveyor_controller
+  PUBLIC ${dependencies}
+  "${PROJECT_NAME}__rosidl_typesupport_cpp"
+)
+
+install(TARGETS
+  pusher_controller
+  conveyor_controller
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(DIRECTORY
   config
