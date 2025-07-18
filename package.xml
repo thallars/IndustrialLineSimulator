@@ -10,6 +10,9 @@
 
   <depend>rclpy</depend>
   <depend>ros_gz_sim</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

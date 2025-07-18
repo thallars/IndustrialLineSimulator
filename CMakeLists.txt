@@ -7,9 +7,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV REQUIRED)
 
 install(DIRECTORY
   config
@@ -17,6 +18,12 @@ install(DIRECTORY
   models
   worlds
   DESTINATION share/${PROJECT_NAME}
+)
+
+add_executable(pusher_vision src/pusher_vision.cpp)
+ament_target_dependencies(pusher_vision rclcpp sensor_msgs cv_bridge OpenCV)
+install(TARGETS pusher_vision
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
