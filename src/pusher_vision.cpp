@@ -49,7 +49,7 @@ private:
             }
 
             // Show image
-            cv::imshow("Camera", frame);
+            cv::imshow("Camera", red_frame);
             cv::waitKey(10);
         } catch (cv_bridge::Exception& e) {
             RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
