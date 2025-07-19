@@ -8,23 +8,36 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(ament_index_cpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(ros_gz_bridge REQUIRED)
+find_package(ros_gz_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/ConveyorStart.srv"
+  "srv/SpawnProp.srv"
 )
 ament_export_dependencies(rosidl_default_runtime)
 
 set(dependencies
   ${rclcpp_TARGETS}
+  ${ament_index_cpp_TARGETS}
   ${std_msgs_TARGETS}
   ${std_srvs_TARGETS}
   ${sensor_msgs_TARGETS}
+  ${ros_gz_bridge_TARGETS}
+  ${ros_gz_interfaces_TARGETS}
+)
+
+add_executable(ros_gz_bridge src/ros_gz_bridge.cpp)
+target_link_libraries(
+  ros_gz_bridge
+  PUBLIC ${dependencies}
 )
 
 add_executable(pusher_controller src/pusher_controller.cpp)
@@ -40,9 +53,18 @@ target_link_libraries(
   "${PROJECT_NAME}__rosidl_typesupport_cpp"
 )
 
+add_executable(prop_spawner src/prop_spawner.cpp)
+target_link_libraries(
+  prop_spawner
+  PUBLIC ${dependencies}
+  "${PROJECT_NAME}__rosidl_typesupport_cpp"
+)
+
 install(TARGETS
+  ros_gz_bridge
   pusher_controller
   conveyor_controller
+  prop_spawner
   DESTINATION lib/${PROJECT_NAME}
 )
 

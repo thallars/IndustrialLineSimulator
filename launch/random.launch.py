@@ -27,6 +27,10 @@ def generate_launch_description():
             bridge_name='gz_bridge',
             config_file=gz_bridge_config
         ),
+        Node(
+            package=package_name,
+            executable='ros_gz_bridge'
+        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_launch_path),
             launch_arguments={
@@ -53,6 +57,10 @@ def generate_launch_description():
         Node(
             package=package_name,
             executable='conveyor_controller'
+        ),
+        Node(
+            package=package_name,
+            executable='prop_spawner'
         ),
         Node(
             package=package_name,

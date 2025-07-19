@@ -1,0 +1,5 @@
+# if the prop is to be denied
+bool target false
+---
+bool success
+string message
