@@ -29,7 +29,7 @@ class RandomStart : public rclcpp::Node {
         auto spawner_res = spawner_clt->async_send_request(spawner_req);
         if (rclcpp::spin_until_future_complete(this->shared_from_this(), spawner_res) !=
         rclcpp::FutureReturnCode::SUCCESS || !spawner_res.get()->success) {
-            RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed while calling service /props/spawn");
+            RCLCPP_ERROR(this->get_logger(), "Failed while calling service /props/spawn");
             return;
         }
       }
@@ -40,19 +40,20 @@ class RandomStart : public rclcpp::Node {
       auto conveyor_res = conveyor_clt->async_send_request(conveyor_req);
       if (rclcpp::spin_until_future_complete(this->shared_from_this(), conveyor_res) !=
       rclcpp::FutureReturnCode::SUCCESS || !conveyor_res.get()->success) {
-          RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed while calling service /conveyor/start");
+          RCLCPP_ERROR(this->get_logger(), "Failed while calling service /conveyor/start");
           return;
       }
+      RCLCPP_INFO(this->get_logger(), "Random setup ready");
     }
 
     template<typename T>
     bool wait_for_service(typename rclcpp::Client<T>::SharedPtr client) {
         while (!client->wait_for_service(1s)) {
             if (!rclcpp::ok()) {
-                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
             return false;
             }
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service not available, waiting again...");
+            RCLCPP_INFO(this->get_logger(), "Service not available, waiting again...");
         }
         return true;
     }

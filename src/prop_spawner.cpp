@@ -31,10 +31,10 @@ class PropSpawner : public rclcpp::Node {
     bool wait_for_service(typename rclcpp::Client<T>::SharedPtr client) {
         while (!client->wait_for_service(1s)) {
             if (!rclcpp::ok()) {
-                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
             return false;
             }
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service not available, waiting again...");
+            RCLCPP_INFO(this->get_logger(), "Service not available, waiting again...");
         }
         return true;
     }
