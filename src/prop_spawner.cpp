@@ -1,6 +1,8 @@
 #include <memory>
 #include <chrono>
 #include <functional>
+#include <random>
+#include <math.h>
 
 #include <rclcpp/rclcpp.hpp>
 #include <ament_index_cpp/get_package_share_directory.hpp>
@@ -49,11 +51,14 @@ class PropSpawner : public rclcpp::Node {
     ) {
       if (!wait_for_service<ros_gz_interfaces::srv::SpawnEntity>(spawn_clt)) return;
       std::string package_share_directory = ament_index_cpp::get_package_share_directory("conveyor_sorter");
+      static std::uniform_real_distribution<double> unif(0., 2 * M_PI);
+      static std::default_random_engine re;
       auto spawn_req = std::make_shared<ros_gz_interfaces::srv::SpawnEntity::Request>();
       auto *ef = &spawn_req->entity_factory;
       ef->name = std::string("prop") + std::to_string(prop_counter + 1);
       ef->pose.position.x = - INIT_MARGIN - PROP_MARGIN * prop_counter++;
       ef->pose.position.z = 2.;
+      ef->pose.orientation.z = unif(re);
       ef->relative_to = "belt";
       if (request->target) {
         ef->sdf_filename = package_share_directory + "/models/vegetables/bad_veg.sdf";
