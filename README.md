@@ -60,3 +60,10 @@ ros2 service call /conveyor/start conveyor_sorter/srv/ConveyorStart
   - `target`  
     Sets type of the prop (if true, it will be sorted out).  
     Works only if `random` is off.
+
+
+## Demo
+
+![](./demo/scr2.png)
+
+![](./demo/scr1.png)
