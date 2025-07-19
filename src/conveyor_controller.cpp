@@ -44,7 +44,7 @@ class ConveyorController : public rclcpp::Node {
       conveyor_sorter::srv::ConveyorStart::Response::SharedPtr response
     ) {
       std_msgs::msg::Float64 start_vel;
-      start_vel.data = (request->forward ? 1. : -1.) * 1.;
+      start_vel.data = (request->forward ? 1. : -1.) * request->speed;
       conveyor_vel_pub->publish(start_vel);
       response->success = true;
       response->message = "conveyor started";

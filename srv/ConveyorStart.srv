@@ -1,5 +1,6 @@
 # to go backward pass false
 bool forward true
+float64 speed 1.0
 ---
 bool success
 string message
