@@ -40,7 +40,7 @@ class PusherController : public rclcpp::Node {
       std_msgs::msg::Float64 end_pos;
       end_pos.data = 3.;
       pusher_pos_pub->publish(end_pos);
-      rclcpp::sleep_for(1s);
+      rclcpp::sleep_for(200ms);
       std_msgs::msg::Float64 start_pos;
       start_pos.data = 0.;
       pusher_pos_pub->publish(start_pos);
