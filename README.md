@@ -1,23 +1,19 @@
-# IndustrialLineSimulator
+# Coveyor Sorter
 ## Requirements
 - ROS 2 Jazzy Jalisco 
 *(Developed using `osrf/ros:jazzy-desktop-full` Docker image)*
 - `ros_gz_sim` package
-## Usage
-Run:
+- `vision_opencv` package
+## Installation
+### Building from source
 ```
 source /opt/ros/jazzy/setup.bash
-gz sim conveyor_sorter/worlds/conveyor_world.sdf
+colcon build
+source install/setup.bash
 ```
-In another terminal:
+### Launch
 ```
-ros2 run ros_gz_sim create -file conveyor_sorter/models/conveyor/model.sdf
-ros2 run ros_gz_sim create -file conveyor_sorter/models/pusher/model.sdf
+ros2 launch conveyor_sorter launch.py
 ```
-To send a command to the pusher and belt:
-```
-gz topic -t "/rod_vel" -m gz.msgs.Double -p "data: 10.0"
-gz topic -t "/belt_vel" -m gz.msgs.Double -p "data: 0.0"
-```
-Topic with R8G8B8 images:
-`/camera/image_raw`
+### Usage
+> TODO
