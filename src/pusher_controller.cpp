@@ -8,6 +8,7 @@
 #include <sensor_msgs/msg/joint_state.hpp>
 
 using namespace std::placeholders;
+using namespace std::literals::chrono_literals;
 
 class PusherController : public rclcpp::Node {
   public:
@@ -39,7 +40,7 @@ class PusherController : public rclcpp::Node {
       std_msgs::msg::Float64 end_pos;
       end_pos.data = 3.;
       pusher_pos_pub->publish(end_pos);
-      rclcpp::sleep_for(std::chrono::seconds(1));
+      rclcpp::sleep_for(1s);
       std_msgs::msg::Float64 start_pos;
       start_pos.data = 0.;
       pusher_pos_pub->publish(start_pos);
