@@ -60,11 +60,19 @@ target_link_libraries(
   "${PROJECT_NAME}__rosidl_typesupport_cpp"
 )
 
+add_executable(random src/random_start.cpp)
+target_link_libraries(
+  random
+  PUBLIC ${dependencies}
+  "${PROJECT_NAME}__rosidl_typesupport_cpp"
+)
+
 install(TARGETS
   ros_gz_bridge
   pusher_controller
   conveyor_controller
   prop_spawner
+  random
   DESTINATION lib/${PROJECT_NAME}
 )
 
