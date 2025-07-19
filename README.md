@@ -19,8 +19,7 @@ source install/setup.bash
 
 ## Usage
 
-### Launch
-
+Launch:
 ```sh
 ros2 launch conveyor_sorter init.launch.py
 ```
@@ -29,7 +28,15 @@ Spawn multiple random props and start the conveyor:
 ```sh
 ros2 run conveyor_sorter random
 ```
+
+Spawn a random prop on the conveyor:
+```sh
+ros2 service call /props/spawn conveyor_sorter/srv/SpawnProp
 ```
+
+Start the conveyor:
+```sh
+ros2 service call /conveyor/start conveyor_sorter/srv/ConveyorStart
 ```
 
 ## Structure
@@ -37,8 +44,19 @@ ros2 run conveyor_sorter random
 ### Services
 
 - `/conveyor/start`  
-  Starts the conveyor. May go backwards by setting `forward` to false. May go with different speed by setting `speed`.
+  Starts the conveyor.
+  - `forward`  
+    Goes forward if true, backwards otherwise.
+  - `speed`  
+    Speed of the conveyor.
+- `/conveyor/stop`  
+  Stops the conveyor.
 - `/pusher/push`  
   Performs a single push by the pusher.
 - `/props/spawn`  
-  Spawns a prop on the conveyor. May spawn random from the pool by setting `random` to true, or may be chosen manually by setting `random` to false and varying `target` (if true, it will be sorted out).
+  Spawns a prop on the conveyor.
+  - `random`  
+    If true, chooses a prop randomly from the pool.
+  - `target`  
+    Sets type of the prop (if true, it will be sorted out).  
+    Works only if `random` is off.
