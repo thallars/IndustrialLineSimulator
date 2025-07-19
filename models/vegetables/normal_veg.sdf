@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <sdf version="1.9">
-  <model name="good_veg">
+  <model name="normal_veg">
     <link name="body">
       <visual name="body_visual">
         <geometry>
@@ -10,8 +10,8 @@
           </box>
         </geometry>
         <material>
-          <ambient>0 1 0 1</ambient>
-          <diffuse>0 1 0 1</diffuse>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
         </material>
       </visual>
       <collision name="body_collision">

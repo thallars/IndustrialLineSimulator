@@ -51,19 +51,30 @@ class PropSpawner : public rclcpp::Node {
     ) {
       if (!wait_for_service<ros_gz_interfaces::srv::SpawnEntity>(spawn_clt)) return;
       std::string package_share_directory = ament_index_cpp::get_package_share_directory("conveyor_sorter");
-      static std::uniform_real_distribution<double> unif(0., 2 * M_PI);
+
       static std::default_random_engine re;
+      static std::uniform_real_distribution<double> rand_angle(0., 2 * M_PI);
+
       auto spawn_req = std::make_shared<ros_gz_interfaces::srv::SpawnEntity::Request>();
       auto *ef = &spawn_req->entity_factory;
       ef->name = std::string("prop") + std::to_string(prop_counter + 1);
       ef->pose.position.x = - INIT_MARGIN - PROP_MARGIN * prop_counter++;
       ef->pose.position.z = 2.;
-      ef->pose.orientation.z = unif(re);
+      ef->pose.orientation.z = rand_angle(re);
       ef->relative_to = "belt";
-      if (request->target) {
-        ef->sdf_filename = package_share_directory + "/models/vegetables/bad_veg.sdf";
+
+      if (request->random) {
+        const std::string vegs[] = { "bad_veg.sdf", "good_veg.sdf", "normal_veg.sdf" };
+        static std::uniform_int_distribution<int> rand_veg(0, 2);
+        ef->sdf_filename = package_share_directory + "/models/vegetables/" + vegs[rand_veg(re)];
       } else {
-        ef->sdf_filename = package_share_directory + "/models/vegetables/good_veg.sdf";
+        const std::string good_vegs[] = { "good_veg.sdf", "normal_veg.sdf" };
+        static std::uniform_int_distribution<int> rand_good_veg(0, 1);
+        if (request->target) {
+          ef->sdf_filename = package_share_directory + "/models/vegetables/bad_veg.sdf";
+        } else {
+          ef->sdf_filename = package_share_directory + "/models/vegetables/" + good_vegs[rand_good_veg(re)];
+        }
       }
 
       auto async_cb = [service, request_header, request](

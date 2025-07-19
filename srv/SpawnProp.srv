@@ -1,5 +1,6 @@
 # if the prop is to be denied
 bool target false
+bool random true
 ---
 bool success
 string message
